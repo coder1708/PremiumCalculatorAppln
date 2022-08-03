@@ -40,5 +40,13 @@ describe('AppComponent', () => {
     component.form.controls['deathsuminsured'].setValue(1600000);
     component.form.controls['occupation'].setValue('Doctor');
     expect(component.form.valid).toBeTruthy();
-  })
+  });
+  
+  it('should call the onOccupationChange method', () => {
+    fixture.detectChanges();
+    spyOn(component, 'onOccupationChange');
+    el = fixture.debugElement.query(By.css('select')).nativeElement;
+    el.click();
+    expect(component.onOccupationChange).toHaveBeenCalledTimes(0);
+  });
 });
