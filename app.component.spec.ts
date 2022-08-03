@@ -75,19 +75,6 @@ describe('AppComponent', () => {
     })
   })
 
-  it('should change the value on selection change', () => {
-    fixture.detectChanges();
-    let select: HTMLSelectElement = fixture.debugElement.nativeElement.
-      querySelector('#form').querySelectorAll('select');
-    select.value = select.options[2].value;
-    select.dispatchEvent(new Event('change'));
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      let text = select.options[select.selectedIndex].label;
-      expect(text).toBe('Cleaner');
-    });
-  });
-
   it('should execute the component method on change', () => {
     spyOn(component, 'onOccupationChange');
     component.OccupationList = [{ occupation: "Cleaner", rating: 'Light Manual' },
