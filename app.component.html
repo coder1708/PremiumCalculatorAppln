@@ -1,0 +1,70 @@
+<div class="card">
+  <div class="card-body">
+    <div>
+      <h1 class="text-center">{{title}}</h1>
+    </div>
+    <div>
+      <hr />
+    </div>
+    <form [formGroup]="form">
+      <div class="input-group input-group-sm col-sm-6 m-0 p-0">
+        <label><b>Name : </b></label>&nbsp;
+        <input type="text" onkeypress="return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 95 || event.charCode == 46 || event.charCode == 45 || event.charCode == 32" formControlName="name" style="width:400px" placeholder="Enter Name" class="form-control">
+        <div *ngIf="name.touched && name.invalid" class="alert alert-danger">
+          <div *ngIf="name.errors.required">Name is required.</div>
+        </div>
+      </div>
+      <div>
+        &nbsp;
+      </div>
+      <div class="input-group input-group-sm col-sm-6 m-0 p-0">
+        <label><b>Age : </b></label>&nbsp;
+        <input type="number" min="1" formControlName="age" style="width:400px" 
+        placeholder="Enter Age" class="form-control" (blur)="ageValidate()">
+        <div *ngIf="age.touched && age.invalid" class="alert alert-danger">
+          <div *ngIf="age.errors.required">Age is required.</div>
+        </div>
+      </div>
+      <div>
+        &nbsp;
+      </div>
+      <div class="input-group input-group-sm col-sm-6 m-0 p-0">
+        <label><b>Date Of Birth : </b></label>&nbsp;
+        <input type="date" formControlName="dob" style="width:400px" placeholder="Enter Date Of Birth"
+          class="form-control">
+          <div *ngIf="dob.touched && dob.invalid" class="alert alert-danger">
+            <div *ngIf="dob.errors.required">DOB is required.</div>
+          </div>
+      </div>
+      
+      <div>
+        &nbsp;
+      </div>
+      <div class="input-group input-group-sm col-sm-6 m-0 p-0">
+        <label><b>Death - Sum Insured : </b></label>&nbsp;
+        <input type="number" formControlName="deathsuminsured" style="width:400px" placeholder="Enter Death Sum Insured"
+          class="form-control" (blur)="sumInsuredValidate()">
+        <div *ngIf="deathsuminsured.touched && deathsuminsured.invalid" class="alert alert-danger">
+          <div *ngIf="deathsuminsured.errors.required">Death Sum insured is required.</div>
+        </div>
+      </div>
+      <div>
+        &nbsp;
+      </div>
+      <div class="input-group input-group-sm col-sm-6 m-0 p-0">
+        <label><b>Occupation : </b></label>&nbsp;
+        <select class="form-control" formControlName="occupation" (change)="onOccupationChange($event)">
+          <option value="" selected>Select Occupation</option>
+          <option *ngFor="let data of OccupationList" [value]="data.rating">{{data.occupation}}</option>
+        </select>
+        <div *ngIf="occupation.touched && occupation.invalid" class="alert alert-danger">
+          <div *ngIf="occupation.errors.required">Occupation is required.</div>
+        </div>
+      </div>
+      <div>&nbsp;</div>
+      <div *ngIf="hidePremiumAmount">
+        <b>Premium Calculated Amount :</b> {{premiumAmount | currency}}
+      </div>
+    </form>
+  </div>
+</div>
