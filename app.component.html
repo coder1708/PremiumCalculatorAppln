@@ -41,7 +41,7 @@
         &nbsp;
       </div>
       <div class="input-group input-group-sm col-sm-6 m-0 p-0">
-        <label><b>Death - Sum Insured : </b></label>&nbsp;
+        <label><b>Death - Sum Insured(in $) : </b></label>&nbsp;
         <input type="number" formControlName="deathsuminsured" style="width:400px" placeholder="Enter Death Sum Insured"
           class="form-control" (blur)="sumInsuredValidate()">
         <div *ngIf="deathsuminsured.touched && deathsuminsured.invalid" class="alert alert-danger">
