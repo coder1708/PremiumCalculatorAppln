@@ -57,7 +57,7 @@ describe('AppComponent', () => {
     const formDeathSumAssElement: HTMLInputElement = fixture.debugElement.nativeElement.
       querySelector('#form').querySelectorAll('input')[3];
     const formSelectOccuptn: HTMLElement = fixture.debugElement.nativeElement.
-      querySelector('#form').querySelectorAll('select')[4];
+      querySelector('#form').querySelectorAll('select');
 
     formNameElement.value = "Amit Tiwari";
     formAgeElement.valueAsNumber = 29;
@@ -78,7 +78,7 @@ describe('AppComponent', () => {
   it('should change the value on selection change', () => {
     fixture.detectChanges();
     let select: HTMLSelectElement = fixture.debugElement.nativeElement.
-      querySelector('#form').querySelectorAll('select')[4];
+      querySelector('#form').querySelectorAll('select');
     select.value = select.options[2].value;
     select.dispatchEvent(new Event('change'));
     fixture.detectChanges();
@@ -100,11 +100,11 @@ describe('AppComponent', () => {
     component.occupationChange = component.OccupationList[1];
     fixture.detectChanges();
     let select: HTMLSelectElement = fixture.debugElement.nativeElement.
-      querySelector('#form').querySelectorAll('select')[4];
+      querySelector('#form').querySelectorAll('select');
     fixture.whenStable().then(() => {
       select.dispatchEvent(new Event('change'));
       fixture.detectChanges();
-        expect(component.onOccupationChange).toHaveBeenCalledWith({ occupation: 'Doctor' });
+        expect(component.onOccupationChange).toHaveBeenCalledWith({occupation: "Doctor", rating: 'Professional'});
         console.log('after expect Monthly Premium Calculated Amount');
     });
   });
