@@ -42,6 +42,15 @@ describe('AppComponent', () => {
     expect(component.form.valid).toBeTruthy();
   });
   
+  it('CHECK Form is Invalid', () => {
+    component.form.controls['name'].setValue('Amit Tiwari');
+    component.form.controls['age'].setValue(null);
+    component.form.controls['dob'].setValue('08/17/1993');
+    component.form.controls['deathsuminsured'].setValue(1600000);
+    component.form.controls['occupation'].setValue('Doctor');
+    expect(component.form.invalid).toBeTruthy();
+  });
+  
   it('should call the onOccupationChange method', () => {
     fixture.detectChanges();
     spyOn(component, 'onOccupationChange');
