@@ -1,4 +1,3 @@
-import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -9,7 +8,7 @@ enum RatingValue {
   HeavyManual = 1.75
 }
 
-enum RatingString {
+export enum RatingString {
   Professional = 'Professional',
   WhiteCollar = 'White Collar',
   LightManual = 'Light Manual',
@@ -25,10 +24,6 @@ enum RatingString {
 export class AppComponent {
   title = 'Premium Calculator Application';
 
-
-  constructor() {
-  }
-
   OccupationList: Array<any> = [
     { occupation: "Cleaner", rating: 'Light Manual' },
     { occupation: "Doctor", rating: 'Professional' },
@@ -37,6 +32,16 @@ export class AppComponent {
     { occupation: "Mechanic", rating: 'Heavy Manual' },
     { occupation: "Florist", rating: 'Light Manual' }
   ];
+
+  selectedOccupation = new FormControl(this.OccupationList[0]);
+
+  occupationChange: any;
+  factorValue: number = 1;
+  premiumAmount: number = 0;
+  hidePremiumAmount: boolean = false;
+
+  constructor() {
+  }
 
   form = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -74,17 +79,13 @@ export class AppComponent {
   }
 
   sumInsuredValidate() {
-    // this.form.controls['deathsuminsured'].setValue(this.currencyPipe.transform(this.form.controls['deathsuminsured'].value, 'USD'));
     if (this.form.controls['deathsuminsured'].value == '' || this.form.controls['deathsuminsured'].value == null) {
       this.hidePremiumAmount = false;
       this.form.controls['occupation'].setValue("");
     }
   }
 
-  occupationChange: any;
-  factorValue: any;
-  premiumAmount: any;
-  hidePremiumAmount: boolean = false;
+
   onOccupationChange(event: any) {
     if (this.form.invalid) {
       this.hidePremiumAmount = false;
@@ -93,31 +94,29 @@ export class AppComponent {
     }
     if (this.form.valid) {
       this.occupationChange = event.target.value;
-      switch (this.occupationChange) {
-        case RatingString.LightManual:
-          this.factorValue = RatingValue.LightManual;
-          this.premiumAmount = (this.form.controls['deathsuminsured'].value * this.factorValue * this.form.controls['age'].value) / 1000 * 12;
-          this.hidePremiumAmount = true;
-          break;
-        case RatingString.Professional:
-          this.factorValue = RatingValue.Professional;
-          this.premiumAmount = (this.form.controls['deathsuminsured'].value * this.factorValue * this.form.controls['age'].value) / 1000 * 12;
-          this.hidePremiumAmount = true;
-          break;
-        case RatingString.WhiteCollar:
-          this.factorValue = RatingValue.WhiteCollar;
-          this.premiumAmount = (this.form.controls['deathsuminsured'].value * this.factorValue * this.form.controls['age'].value) / 1000 * 12;
-          this.hidePremiumAmount = true;
-          break;
-        case RatingString.HeavyManual:
-          this.factorValue = RatingValue.HeavyManual;
-          this.premiumAmount = (this.form.controls['deathsuminsured'].value * this.factorValue * this.form.controls['age'].value) / 1000 * 12;
-          this.hidePremiumAmount = true;
-          break;
-        default:
-          this.hidePremiumAmount = false;
-          break;
-      }
+      this.premiumAmountCalculator(this.occupationChange);
     }
+  }
+
+  public premiumAmountCalculator(rating: any) {
+    switch (rating) {
+      case RatingString.LightManual:
+        this.factorValue = RatingValue.LightManual;
+        break;
+      case RatingString.Professional:
+        this.factorValue = RatingValue.Professional;
+        break;
+      case RatingString.WhiteCollar:
+        this.factorValue = RatingValue.WhiteCollar;
+        break;
+      case RatingString.HeavyManual:
+        this.factorValue = RatingValue.HeavyManual;
+        break;
+      default:
+        this.hidePremiumAmount = false;
+        break;
+    }
+    this.premiumAmount = (this.form.controls['deathsuminsured'].value * this.factorValue * this.form.controls['age'].value) / 1000 * 12;
+    this.hidePremiumAmount = true;
   }
 }
