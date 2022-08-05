@@ -61,9 +61,9 @@
           <option value="" selected>Select Occupation</option>
           <option *ngFor="let data of OccupationList" [value]="data.rating">{{data.occupation}}</option>
         </select>
-      </div>
-      <div  *ngIf="occupation.touched && occupation.invalid" class="alert alert-danger input-group input-group-sm col-sm-6 m-0 p-0">
-        <div *ngIf="occupation.errors.required">Please enter above required fields and then select occupation.</div>
+        <div  *ngIf="occupation.touched && occupation.invalid" class="alert alert-danger">
+          <div *ngIf="occupation.errors.required">Occupation is required.</div>
+        </div>
       </div>
       <div>&nbsp;</div>
       <div *ngIf="hidePremiumAmount">
